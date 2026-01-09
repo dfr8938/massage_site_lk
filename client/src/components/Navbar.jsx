@@ -1,4 +1,3 @@
-// client/src/components/Navbar.jsx
 import { Toolbar } from 'primereact/toolbar';
 import { Menu } from 'primereact/menu';
 import { Button } from 'primereact/button';
@@ -35,6 +34,7 @@ const Navbar = () => {
     { label: 'Главная', icon: 'pi pi-home', path: '/', command: navigateTo('/') },
     { label: 'Услуги', icon: 'pi pi-briefcase', path: '/services', command: navigateTo('/services') },
     { label: 'Отзывы', icon: 'pi pi-comments', path: '/reviews', command: navigateTo('/reviews') },
+    { label: 'Вопросы', icon: 'pi pi-question-circle', path: '/faq', command: navigateTo('/faq') },
     { label: 'Контакты', icon: 'pi pi-phone', path: '/contact', command: navigateTo('/contact') }
   ];
 

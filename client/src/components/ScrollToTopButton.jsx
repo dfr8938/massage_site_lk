@@ -1,69 +1,58 @@
-// client/src/components/ScrollToTopButton.jsx
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from 'primereact/button';
-import styles from './Footer.module.css';
-import './ScrollToTopButton.module.css';
+import './ScrollToTopButton.css';
 
 const ScrollToTopButton = () => {
-  const [show, setShow] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
+    const toggleVisibility = () => {
       if (window.pageYOffset > 300) {
-        setShow(true);
+        setIsVisible(true);
       } else {
-        setShow(false);
+        setIsVisible(false);
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', toggleVisibility);
+
+    return () => window.removeEventListener('scroll', toggleVisibility);
   }, []);
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
   };
 
   return (
-    <button
-      onClick={scrollToTop}
-      className="scroll-to-top-button"
-      style={{
-        position: 'fixed',
-        bottom: '30px',
-        right: '30px',
-        zIndex: '1000',
-        border: 'none',
-        background: 'none',
-        padding: 0,
-        opacity: show ? 1 : 0,
-        visibility: show ? 'visible' : 'hidden',
-        transition: 'opacity 0.4s ease, visibility 0.4s ease',
+    <Button
+      icon="pi pi-chevron-up"
+      rounded
+      pt={{
+        root: {
+          style: {
+            position: 'fixed',
+            bottom: '30px',
+            right: '30px',
+            zIndex: '1000',
+            width: '44px',
+            height: '44px',
+            backgroundColor: 'white',
+            color: '#5a4a42',
+            transition: 'all 0.3s ease',
+            border: '1px solid #d9d3ce',
+            opacity: isVisible ? 1 : 0,
+            visibility: isVisible ? 'visible' : 'hidden'
+          }
+        }
       }}
+      className="scroll-to-top-button pulse-grow scroll-button"
+      onClick={scrollToTop}
       aria-label="Наверх"
       title="Наверх"
-    >
-      <div className={show ? 'pulse-grow' : ''}>
-        <Button
-          icon="pi pi-chevron-up"
-          rounded
-          pt={{
-            root: {
-              style: {
-                width: '44px',
-                height: '44px',
-                backgroundColor: 'white',
-                color: '#5a4a42',
-                boxShadow: '0 4px 12px rgba(90, 74, 66, 0.1)',
-                transition: 'all 0.4s ease',
-                border: '1px solid #e8e5e0',
-              }
-            }
-          }}
-          className={`${styles['social-button']} scroll-button`}
-        />
-      </div>
-    </button>
+    />
   );
 };
 
