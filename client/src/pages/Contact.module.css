@@ -1,0 +1,427 @@
+/* === Общий контейнер === */
+.container {
+  padding: 2rem;
+  font-family: 'Georgia', serif;
+  color: #444;
+  max-width: 900px;
+  margin: 0 auto;
+  line-height: 1.8;
+}
+
+/* === Появление текста через маску === */
+.title-reveal {
+  position: relative;
+  display: inline-block;
+  color: #5a4a42;
+}
+
+.title-reveal::before {
+  content: attr(data-text);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0;
+  overflow: hidden;
+  color: #5a4a42;
+  white-space: pre;
+  animation: reveal-mask 2.2s ease-out forwards;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.title-reveal span {
+  opacity: 0;
+  animation: fade-in-full 2.4s ease-out forwards;
+  z-index: 2;
+  position: relative;
+}
+
+@keyframes reveal-mask {
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes fade-in-full {
+  to {
+    opacity: 1;
+  }
+}
+
+/* === Волна по буквам — как на Home === */
+.letter {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.letter.animate {
+  opacity: 1;
+  transform: translateY(0);
+  animation: wave-reverse 1.6s ease-in-out infinite;
+}
+
+@keyframes wave-reverse {
+  0%, 100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  50% {
+    opacity: 0.7;
+    transform: translateY(-5px);
+  }
+}
+
+/* === Заголовок === */
+.headerBlock {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.header {
+  color: #5a4a42;
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.subheader {
+  color: #666;
+  font-size: 1.1rem;
+  font-style: italic;
+  margin: 0.5rem 0 2rem;
+}
+
+/* === Линия с каплей в центре === */
+.dividerBlock {
+  position: relative;
+  height: 6px;
+  margin: 3rem auto;
+  width: 80%;
+  max-width: 600px;
+  overflow: hidden;
+}
+
+.dividerBlock::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: #d4a76a;
+  transform: translateY(-50%);
+  opacity: 0.6;
+}
+
+.dividerBlock::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #d4a76a;
+  box-shadow: 0 0 6px rgba(212, 167, 106, 0.5);
+  animation: drop-pulse 3s ease-in-out infinite;
+}
+
+@keyframes drop-pulse {
+  0%, 100% {
+    transform: translateX(-50%) scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: translateX(-50%) scale(1.2);
+    opacity: 0.9;
+  }
+}
+
+/* === Два столбца === */
+.columns {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 3rem;
+  margin-bottom: 3rem;
+}
+
+.column {
+  padding: 0;
+}
+
+/* === Заголовки секций === */
+.sectionTitle {
+  color: #5a4a42;
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #d4a76a;
+  opacity: 0.9;
+}
+
+/* === Строка контакта: иконка + текст === */
+.contactRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1.2rem;
+  line-height: 1.6;
+}
+
+/* === Иконки контактов === */
+.contactIcon {
+  color: #d4a76a;
+  font-size: 1.1rem;
+  min-width: 1.6rem;
+  opacity: 0.9;
+  transition: transform 0.2s ease;
+  margin-top: 0.1rem;
+}
+
+.contactIcon:hover {
+  transform: rotate(10deg);
+}
+
+/* === Текст контакта — появляется после иконки === */
+.contactText {
+  flex: 1;
+  font-size: 1rem;
+  color: #555;
+}
+
+.contactText a {
+  color: #5a4a42;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.contactText a:hover {
+  color: #d4a76a;
+  text-decoration: underline;
+}
+
+/* === Сетка для графика работы (плотная) === */
+.scheduleGrid {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 0.3rem 1rem;
+  line-height: 1.45;
+  font-size: 1rem;
+}
+
+.day {
+  font-style: italic;
+  color: #5a4a42;
+  font-weight: 500;
+}
+
+.time {
+  color: #555;
+}
+
+/* === Время в будни — полужирное === */
+.timeBold {
+  font-weight: 600;
+  color: #444;
+}
+
+/* === Анимированный градиентный текст для акцентных слов === */
+.gradientText {
+  display: inline-block;
+  font-weight: 700;
+  background: linear-gradient(90deg, #5a4a42, #d4a76a, #5a4a42);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradient-shift 3s ease-in-out infinite;
+}
+
+/* Никаких действий при наведении — текст остаётся стабильным */
+/* .gradientText:hover удалён — не должен быть в файле */
+
+/* === Карта === */
+.mapContainer {
+  margin: 4rem auto;
+  max-width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e0d8d0;
+  background-color: #f8f4f0;
+}
+
+/* === Финальный текст === */
+.footerText {
+  text-align: center;
+  color: #888;
+  font-size: 0.95rem;
+  margin-top: 2rem;
+  font-style: italic;
+}
+
+/* === Современная градиентная кнопка === */
+.gradient-button {
+  background: linear-gradient(90deg, #5a4a42, #d4a76a, #5a4a42);
+  background-size: 200% 100%;
+  animation: gradient-shift 3s ease-in-out infinite;
+  border: none;
+  color: white !important;
+  font-weight: 500;
+  border-radius: 12px !important;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(90, 74, 66, 0.15);
+  position: relative;
+  overflow: hidden;
+  transform: translateY(0);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.gradient-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 
+    0 8px 20px rgba(90, 74, 66, 0.25),
+    0 0 15px rgba(212, 167, 106, 0.4);
+  animation-play-state: paused;
+}
+
+.gradient-button:active {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(90, 74, 66, 0.15);
+}
+
+.gradient-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at center, rgba(255,255,255,0.15) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.gradient-button:hover::before {
+  opacity: 1;
+}
+
+.gradient-button i {
+  transition: transform 0.3s ease;
+  font-size: 1.1rem;
+}
+
+.gradient-button:hover i {
+  transform: scale(1.15) rotate(5deg);
+}
+
+.gradient-button:active i {
+  transform: scale(0.95);
+}
+
+/* === Общая анимация градиента === */
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+/* === Адаптивность === */
+@media (max-width: 600px) {
+  .container {
+    padding: 1.5rem;
+    font-size: 0.95rem;
+  }
+
+  .header {
+    font-size: 1.8rem;
+  }
+
+  .subheader {
+    font-size: 1rem;
+    margin: 0.5rem 0 1.8rem;
+  }
+
+  .columns {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .sectionTitle {
+    font-size: 1.45rem;
+    margin-bottom: 1.3rem;
+  }
+
+  .contactRow {
+    align-items: flex-start;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+  }
+
+  .contactIcon {
+    font-size: 1.4rem;
+    min-width: 1.8rem;
+  }
+
+  .contactText {
+    font-size: 1.05rem;
+  }
+
+  .contactText a {
+    font-size: 1.05rem;
+  }
+
+  .scheduleGrid {
+    grid-template-columns: 70px 1fr;
+    gap: 0.3rem 0.8rem;
+    font-size: 1.05rem;
+    line-height: 1.5;
+  }
+
+  .day {
+    font-size: 0.95rem;
+    font-style: italic;
+  }
+
+  .time {
+    font-size: 1.05rem;
+  }
+
+  .timeBold {
+    font-weight: 600;
+  }
+
+  .mapContainer {
+    height: 300px;
+  }
+
+  .mapContainer iframe {
+    height: 300px;
+  }
+
+  .footerText {
+    margin-top: 1.5rem;
+    font-size: 0.9rem;
+  }
+
+  .gradient-button {
+    font-size: 1rem;
+    padding: 0.7rem 1.2rem !important;
+  }
+
+  .gradient-button i {
+    font-size: 1rem;
+  }
+
+  .gradientText {
+    font-size: 1.05rem;
+  }
+}

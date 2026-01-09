@@ -1,0 +1,509 @@
+/* client/src/index.css — ЕДИНЫЙ, СТАБИЛЬНЫЙ, МАСШТАБИРУЕМЫЙ */
+
+/* === ПЕРЕМЕННЫЕ === */
+:root {
+  --color-primary: #5a4a42;
+  --color-primary-hover: #d4a76a;
+  --color-bg: #fcfaf8;
+  --color-text: #5a4a42;
+  --color-border: #eae4dd;
+  --color-success: #81c784;
+  --color-warning: #ffb74d;
+  --color-error: #e57373;
+  --border-radius: 8px;
+  --transition: all 0.2s ease;
+}
+
+/* === СБРОС И БАЗОВЫЕ СТИЛИ === */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6, p {
+  margin: 0 0 1rem 0;
+  color: var(--color-text);
+}
+
+/* === АНИМАЦИИ === */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideInRight {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes floatIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes fadeInUpCustom {
+  from {
+    opacity: 0;
+    transform: translateY(-30px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* === ДОСТУПНОСТЬ: АНИМАЦИИ === */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* === КРОССБРАУЗЕРНОСТЬ: ПОДДЕРЖКА GRID И FLEX === */
+@supports not (display: grid) {
+  .p-datatable .p-datatable-wrapper {
+    display: block !important;
+  }
+  .p-datatable .p-datatable-thead > tr,
+  .p-datatable .p-datatable-tbody > tr {
+    display: flex !important;
+    flex-wrap: wrap !important;
+  }
+}
+
+@supports not (aspect-ratio: 1 / 1) {
+  /* Для старых браузеров без поддержки aspect-ratio */
+  .logo {
+    height: 0;
+    padding-bottom: 100%;
+    position: relative;
+  }
+  .logo img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+/* === СТИЛИ ДЛЯ КАРТИНОК В ПРОФИЛЕ === */
+.avatar,
+.profile-section img {
+  width: 40px;
+  height: 40px;
+  max-width: 40px;
+  max-height: 40px;
+  object-fit: cover;
+  border-radius: 50%;
+  box-shadow: 0 2px 6px rgba(90, 74, 66, 0.15);
+  border: 2px solid #f8f4f0;
+}
+
+@media (max-width: 600px) {
+  .avatar,
+  .profile-section img {
+    width: 36px;
+    height: 36px;
+    max-width: 36px;
+    max-height: 36px;
+  }
+}
+
+/* === ФОКУС ДЛЯ ДОСТУПНОСТИ === */
+:focus-visible {
+  outline: 2px solid var(--color-primary-hover);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 2px #ffffff;
+}
+
+/* === ПЛАВНЫЕ ПЕРЕХОДЫ ДЛЯ PRIME REACT === */
+.p-component {
+  transition: none !important;
+}
+
+/* === КНОПКИ — ЕДИНАЯ ГРАДИЕНТНАЯ СТИЛИЗАЦИЯ === */
+.p-button {
+  background: linear-gradient(90deg, var(--color-primary), var(--color-primary-hover), var(--color-primary)) !important;
+  background-size: 200% 100% !important;
+  animation: gradient-shift 3s ease-in-out infinite !important;
+  border: none !important;
+  color: white !important;
+  font-weight: 500 !important;
+  border-radius: var(--border-radius) !important;
+  transition: all 0.3s ease !important;
+  box-shadow: 0 4px 12px rgba(90, 74, 66, 0.15) !important;
+  position: relative !important;
+  overflow: hidden !important;
+  transform: translateY(0) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0.5rem !important;
+  padding: 0.75rem 1.5rem !important;
+  text-transform: none !important;
+}
+
+/* Свечение при наведении */
+.p-button:hover {
+  transform: translateY(-3px) !important;
+  box-shadow: 
+    0 8px 20px rgba(90, 74, 66, 0.25),
+    0 0 15px rgba(212, 167, 106, 0.4) !important;
+  animation-play-state: paused !important;
+}
+
+/* Возвращение при клике */
+.p-button:active {
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 12px rgba(90, 74, 66, 0.15) !important;
+}
+
+/* Эффект "свечения" внутри кнопки */
+.p-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at center, rgba(255,255,255,0.15) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.p-button:hover::before {
+  opacity: 1;
+}
+
+/* Анимация иконки */
+.p-button i {
+  transition: transform 0.3s ease !important;
+  font-size: 1.1rem !important;
+}
+
+.p-button:hover i {
+  transform: scale(1.15) rotate(5deg) !important;
+}
+
+.p-button:active i {
+  transform: scale(0.95) !important;
+}
+
+/* Анимация градиента */
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+/* Фокус */
+.p-button:focus-visible {
+  outline: 2px solid var(--color-primary-hover) !important;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px var(--color-primary-hover) !important;
+}
+
+/* Кнопки с прозрачным фоном (например, иконки) */
+.p-button.p-button-text,
+.p-button.p-button-outlined {
+  background: white !important;
+  color: var(--color-text) !important;
+  border: 1px solid var(--color-border) !important;
+}
+
+.p-button.p-button-text:hover,
+.p-button.p-button-outlined:hover {
+  background: #f8f4f0 !important;
+  border-color: var(--color-primary) !important;
+  color: var(--color-primary) !important;
+}
+
+/* Критические действия (например, выход) */
+.p-button.p-button-danger {
+  background: linear-gradient(90deg, #a0332c, #c44536, #a0332c) !important;
+}
+
+.p-button.p-button-danger:hover {
+  box-shadow: 0 8px 20px rgba(160, 51, 44, 0.3) !important;
+}
+
+/* === ПОЛЯ ВВОДА — ПОЛНАЯ ПЕРЕОПРЕДЕЛЕНИЕ ЦВЕТОВ === */
+.p-inputtext,
+.p-dropdown .p-inputtext,
+.p-inputtextarea {
+  border: 1px solid var(--color-border) !important;
+  border-radius: var(--border-radius) !important;
+  transition: border-color var(--transition), box-shadow var(--transition);
+  background: white !important;
+  color: var(--color-text) !important;
+}
+
+.p-inputtext:focus,
+.p-dropdown.p-focus .p-dropdown-trigger,
+.p-inputtextarea:focus {
+  border-color: var(--color-primary) !important;
+  box-shadow: 0 0 0 1px var(--color-primary) !important;
+  outline: none !important;
+}
+
+.p-inputtext:hover:not(.p-disabled):focus-visible,
+.p-dropdown:hover:not(.p-disabled) .p-dropdown-trigger:focus-visible {
+  border-color: var(--color-primary-hover) !important;
+  box-shadow: 0 0 0 1px var(--color-primary-hover) !important;
+}
+
+/* === СОСТОЯНИЕ АКТИВНОСТИ И ФОКУСА === */
+.p-inputtext:focus,
+.p-dropdown:focus,
+.p-inputtextarea:focus {
+  border-color: var(--color-primary) !important;
+  box-shadow: 0 0 0 1px var(--color-primary) !important;
+}
+
+/* === ИНДИКАТОР ЗАПОЛНЕНИЯ И СОСТОЯНИЯ === */
+.p-input-icon-left > i,
+.p-input-icon-right > i {
+  color: var(--color-primary) !important;
+}
+
+/* === ДЛЯ ЛОГИКИ ПОВЕДЕНИЯ ПРИ ВВОДЕ === */
+.p-input-filled .p-inputtext {
+  background-color: white !important;
+}
+
+.p-inputtext:enabled:hover,
+.p-dropdown:enabled:hover,
+.p-inputtextarea:enabled:hover {
+  border-color: var(--color-primary) !important;
+}
+
+.p-inputtext:enabled:focus,
+.p-dropdown:enabled:focus,
+.p-inputtextarea:enabled:focus {
+  border-color: var(--color-primary) !important;
+  box-shadow: 0 0 0 1px var(--color-primary) !important;
+}
+
+/* === ПЕРЕОПРЕДЕЛЕНИЕ ДЛЯ РАЗЛИЧНЫХ СОСТОЯНИЙ ВВОДА === */
+.p-inputtext.p-invalid,
+.p-inputtext.p-invalid:focus,
+.p-dropdown.p-invalid .p-inputtext,
+.p-dropdown.p-invalid.p-focus .p-dropdown-trigger,
+.p-inputtextarea.p-invalid,
+.p-inputtextarea.p-invalid:focus {
+  border-color: var(--color-error) !important;
+  box-shadow: 0 0 0 1px var(--color-error) !important;
+}
+
+/* === ТАБЛИЦЫ === */
+.p-datatable .p-datatable-header {
+  background: #f8f4f0;
+  border-bottom: 1px solid var(--color-border);
+  color: var(--color-text);
+  font-weight: 500;
+}
+
+.p-datatable .p-datatable-thead > tr > th {
+  background: #faf7f4;
+  color: var(--color-text);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.p-datatable .p-datatable-tbody > tr:hover {
+  background: #f8f4f0 !important;
+}
+
+.p-datatable .p-paginator {
+  background: #f8f4f0;
+  border-top: 1px solid var(--color-border);
+}
+
+.p-paginator .p-paginator-page.p-highlight {
+  background: var(--color-primary) !important;
+  border-color: var(--color-primary) !important;
+  color: white !important;
+}
+
+/* === ТАБЫ === */
+.p-tabview .p-tabview-nav {
+  border-bottom: 2px solid var(--color-border);
+}
+
+.p-tabview .p-tabview-nav li.p-highlight {
+  border-bottom: 3px solid var(--color-primary) !important;
+}
+
+/* === TOAST === */
+.p-toast-message {
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(90, 74, 66, 0.18);
+  animation: slideInRight 0.3s ease-out;
+}
+
+.p-toast-message-success {
+  background: #f8f4f0 !important;
+  border-left: 4px solid var(--color-primary);
+}
+
+/* === DROPDOWN МЕНЮ === */
+.p-menupopup {
+  border-radius: 12px !important;
+  box-shadow: 0 10px 30px rgba(90, 74, 66, 0.15) !important;
+  background: white !important;
+}
+
+.p-menupopup .p-menuitem .p-menuitem-link {
+  color: var(--color-text) !important;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid #eee;
+}
+
+.p-menupopup .p-menuitem:hover .p-menuitem-link {
+  background: #f8f4f0 !important;
+}
+
+/* === react-big-calendar — САМОЕ ВАЖНОЕ: ЗАГРУЖАЕМ СТИЛИ ПОСЛЕ ВСЕГО === */
+.rbc-calendar {
+  font-family: Georgia, serif;
+  border: none;
+}
+
+.rbc-header {
+  background: #f8f4f0;
+  color: var(--color-text);
+  font-weight: 500;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.rbc-month-view,
+.rbc-time-view {
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  overflow: hidden;
+  background: white;
+  box-shadow: 0 4px 12px rgba(90, 74, 66, 0.1);
+}
+
+.rbc-event {
+  background: var(--color-primary);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.85rem;
+}
+
+.rbc-event:hover {
+  background: var(--color-primary-hover);
+  transform: scale(1.05);
+}
+
+.rbc-toolbar button {
+  background: var(--color-primary);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+}
+
+.rbc-toolbar button:hover {
+  background: var(--color-primary-hover);
+}
+
+.rbc-day-bg.weekend {
+  background-color: #fdf7f7 !important;
+  opacity: 0.7;
+}
+
+.rbc-day-bg.blocked-day {
+  background: repeating-linear-gradient(
+    45deg,
+    #f0f0f0,
+    #f0f0f0 10px,
+    #e8e8e8 10px,
+    #e8e8e8 20px
+  ) !important;
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.rbc-day-bg.blocked-day::after {
+  content: "Закрыто";
+  display: block;
+  text-align: center;
+  font-size: 0.75rem;
+  color: #999;
+  margin-top: 0.5rem;
+  font-style: italic;
+}
+
+.rbc-day-bg.blocked-day:hover::after {
+  content: "Этот день недоступен для записи";
+  font-size: 0.85rem;
+  color: var(--color-text);
+  background: rgba(255, 255, 255, 0.9);
+  padding: 0.5rem;
+  border-radius: 6px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  white-space: nowrap;
+}
+
+/* === СПЕЦИАЛЬНЫЕ БЛОКИ: ПУСТЫЕ ТАБЛИЦЫ === */
+.silenceBlock {
+  text-align: center;
+  color: #888;
+  font-style: italic;
+  font-size: 1.1rem;
+  max-width: 400px;
+  margin: 2.5rem auto;
+  padding: 2rem;
+  background: #fdfbf9;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(90, 74, 66, 0.05);
+}
+
+.silenceBlock .line {
+  display: block;
+  opacity: 0;
+  animation: floatIn 0.6s ease-out forwards;
+}
+
+.silenceBlock .line:nth-child(1) { animation-delay: 0.3s; }
+.silenceBlock .line:nth-child(2) { animation-delay: 0.6s; }
+.silenceBlock .line:nth-child(3) { animation-delay: 0.9s; }
+.silenceBlock .line:nth-child(4) { animation-delay: 1.2s; }
+
+/* === АНИМАЦИИ ДЛЯ КОМПОНЕНТОВ === */
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-out;
+}
+
+.fade-in-up {
+  animation: fadeInUpCustom 0.4s ease-out forwards;
+}

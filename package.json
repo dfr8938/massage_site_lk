@@ -1,0 +1,12 @@
+{
+  "name": "massage-ekaterina-frolova",
+  "version": "0.1.0",
+  "scripts": {
+    "client": "cd client && yarn dev",
+    "server": "cd server && yarn dev",
+    "dev": "concurrently \"yarn client\" \"yarn server\""
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}

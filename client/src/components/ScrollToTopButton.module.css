@@ -1,0 +1,76 @@
+/* === ПУЛЬСАЦИЯ — КНОПКА ДЫШИТ, КОГДА ВИДНА === */
+.pulse-grow {
+  animation: pulse-breath 3s ease-in-out infinite alternate;
+  display: inline-block;
+}
+
+@keyframes pulse-breath {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.04);
+  }
+}
+
+/* === ТЁПЛОЕ СВЕЧЕНИЕ ПРИ НАВЕДЕНИИ === */
+.scroll-button {
+  position: relative;
+  transition: all 0.4s ease !important;
+}
+
+.scroll-button:hover {
+  box-shadow: 
+    0 6px 16px rgba(90, 74, 66, 0.15),
+    0 0 14px 3px rgba(212, 167, 106, 0.4) !important;
+  transform: scale(1.12) rotate(10deg);
+  border-color: #d4a76a;
+}
+
+/* === ФОНОВАЯ ВОЛНА ПРИ НАВЕДЕНИИ === */
+.scroll-button::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  width: 0;
+  height: 0;
+  background: radial-gradient(circle, rgba(212, 167, 106, 0.15) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s ease, width 0.5s ease, height 0.5s ease;
+}
+
+.scroll-button:hover::before {
+  width: 90px;
+  height: 90px;
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+  animation: pulse-glow 1.8s ease-out infinite alternate;
+}
+
+@keyframes pulse-glow {
+  0% {
+    opacity: 0.4;
+    width: 90px;
+    height: 90px;
+  }
+  100% {
+    opacity: 0.7;
+    width: 120px;
+    height: 120px;
+  }
+}
+
+/* === АДАПТИВНОСТЬ (по желанию) === */
+@media (max-width: 600px) {
+  .pulse-grow {
+    animation: pulse-breath 3.5s ease-in-out infinite alternate;
+  }
+
+  .scroll-button:hover {
+    transform: scale(1.15) rotate(12deg);
+  }
+}

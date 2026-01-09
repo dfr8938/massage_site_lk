@@ -1,0 +1,237 @@
+/* === Общий контейнер === */
+.container {
+  padding: 2rem;
+  font-family: 'Georgia', serif;
+  color: #444;
+  max-width: 900px;
+  margin: 0 auto;
+  line-height: 1.8;
+}
+
+/* === Появление текста через маску === */
+.title-reveal {
+  position: relative;
+  display: inline-block;
+  color: #5a4a42;
+}
+
+.title-reveal::before {
+  content: attr(data-text);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0;
+  overflow: hidden;
+  color: #5a4a42;
+  white-space: pre;
+  animation: reveal-mask 2.2s ease-out forwards;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.title-reveal span {
+  opacity: 0;
+  animation: fade-in-full 2.4s ease-out forwards;
+  z-index: 2;
+  position: relative;
+}
+
+@keyframes reveal-mask {
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes fade-in-full {
+  to {
+    opacity: 1;
+  }
+}
+
+/* === Заголовки === */
+.header {
+  text-align: center;
+  color: #5a4a42;
+  margin-bottom: 1rem;
+}
+
+.subheader {
+  text-align: center;
+  color: #666;
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+  font-style: italic;
+}
+
+/* === Градиентный текст === */
+.gradientText {
+  background: linear-gradient(90deg, #5a4a42, #d4a76a, #5a4a42);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradient-slide 4s ease-in-out infinite;
+  font-weight: bold;
+}
+
+/* === Линия с каплей в центре (разделитель блоков) === */
+.dividerBlock {
+  position: relative;
+  height: 6px;
+  margin: 3rem auto;
+  width: 80%;
+  max-width: 600px;
+  overflow: hidden;
+}
+
+/* Основная тонкая линия */
+.dividerBlock::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: #d4a76a;
+  transform: translateY(-50%);
+  opacity: 0.6;
+}
+
+/* Капля в центре */
+.dividerBlock::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #d4a76a;
+  box-shadow: 0 0 6px rgba(212, 167, 106, 0.5);
+  animation: drop-pulse 3s ease-in-out infinite;
+}
+
+@keyframes drop-pulse {
+  0%, 100% {
+    transform: translateX(-50%) scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: translateX(-50%) scale(1.2);
+    opacity: 0.9;
+  }
+}
+
+/* === Улучшенная типографика для текста в карточках === */
+.cardText {
+  color: #555;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  margin: 0.8rem 0;
+}
+
+/* === Современная градиентная кнопка с дыханием и свечением === */
+.gradient-button {
+  background: linear-gradient(90deg, #5a4a42, #d4a76a, #5a4a42);
+  background-size: 200% 100%;
+  animation: gradient-shift 3s ease-in-out infinite;
+  border: none;
+  color: white !important;
+  font-weight: 500;
+  border-radius: 12px !important;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(90, 74, 66, 0.15);
+  position: relative;
+  overflow: hidden;
+  transform: translateY(0);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+/* Свечение при наведении */
+.gradient-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 
+    0 8px 20px rgba(90, 74, 66, 0.25),
+    0 0 15px rgba(212, 167, 106, 0.4);
+  animation-play-state: paused;
+}
+
+/* Возвращение при клике */
+.gradient-button:active {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(90, 74, 66, 0.15);
+}
+
+/* Эффект "свечения" внутри кнопки */
+.gradient-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at center, rgba(255,255,255,0.15) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.gradient-button:hover::before {
+  opacity: 1;
+}
+
+/* Анимация иконки */
+.gradient-button i {
+  transition: transform 0.3s ease;
+  font-size: 1.1rem;
+}
+
+.gradient-button:hover i {
+  transform: scale(1.15) rotate(5deg);
+}
+
+.gradient-button:active i {
+  transform: scale(0.95);
+}
+
+/* Анимация градиента */
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+/* === Адаптивность === */
+
+/* Мобильные */
+@media (max-width: 600px) {
+  .container {
+    padding: 1.5rem;
+    font-size: 0.95rem;
+  }
+
+  .subheader {
+    font-size: 1rem;
+    margin-bottom: 1.8rem;
+  }
+
+  .dividerBlock {
+    margin: 2.5rem auto;
+    width: 90%;
+  }
+
+  .gradient-button {
+    font-size: 1rem;
+    padding: 0.7rem 1.2rem !important;
+  }
+
+  .gradient-button i {
+    font-size: 1rem;
+  }
+}

@@ -1,0 +1,328 @@
+/* === ПУНКТ МЕНЮ — ИКОНКА СЛЕВА ОТ ТЕКСТА === */
+.navItem {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  padding: 0.5rem 0.8rem;
+  transition: color 0.3s ease;
+  color: #666;
+  font-weight: 500;
+  overflow: hidden;
+  z-index: 1;
+  border-radius: 8px;
+}
+
+.navItem:hover {
+  color: #5a4a42;
+}
+
+/* === АКТИВНЫЙ ПУНКТ — ТОЛСТОЕ ДЫШАЩЕЕ ПОДЧЁРКИВАНИЕ === */
+.navItem.active {
+  color: #5a4a42;
+  font-weight: 500;
+}
+
+.navItem.active::after {
+  content: '';
+  position: absolute;
+  bottom: 3px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: #d4a76a;
+  border-radius: 1.5px;
+  box-shadow: 0 1px 4px rgba(212, 167, 106, 0.5);
+  animation: grow-underline 0.8s ease-out, pulse-glow-line 2s ease-in-out infinite alternate;
+  z-index: 1;
+}
+
+/* === ТЁПЛАЯ ВОЛНА ПРИ НАВЕДЕНИИ — ТОЛЬКО ::before === */
+.navItem::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  width: 0;
+  height: 0;
+  background: radial-gradient(circle, rgba(212, 167, 106, 0.25) 0%, rgba(212, 167, 106, 0) 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+  transition: width 0.6s ease, height 0.6s ease, opacity 0.8s ease;
+  z-index: -1;
+}
+
+.navItem:hover::before {
+  width: 100px;
+  height: 100px;
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+  animation: pulse-glow 1.5s ease-out infinite;
+}
+
+/* === БЛИК-ПРОБЕГ ПРИ НАВЕДЕНИИ — ТОЛЬКО ::after === */
+.navItem::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.4),
+    rgba(255, 255, 255, 0.55),
+    rgba(255, 255, 255, 0.4),
+    transparent
+  );
+  background-size: 200% 100%;
+  transform: skewX(-20deg);
+  pointer-events: none;
+  opacity: 0;
+  z-index: 3;
+  transition: opacity 0.15s ease;
+}
+
+.navItem:hover::after {
+  opacity: 1;
+  animation: shine-run 0.9s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+/* === АНИМАЦИИ === */
+@keyframes grow-underline {
+  0% {
+    transform: scaleX(0);
+    opacity: 0.7;
+  }
+  80% {
+    transform: scaleX(1.05);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+}
+
+@keyframes pulse-glow-line {
+  0% {
+    opacity: 0.8;
+    box-shadow: 0 1px 4px rgba(212, 167, 106, 0.4);
+  }
+  100% {
+    opacity: 1;
+    box-shadow: 0 1px 8px rgba(212, 167, 106, 0.8), inset 0 0 4px rgba(212, 167, 106, 0.3);
+  }
+}
+
+@keyframes pulse-glow {
+  0% {
+    width: 100px;
+    height: 100px;
+    opacity: 0.3;
+  }
+  50% {
+    width: 140px;
+    height: 140px;
+    opacity: 0;
+  }
+  100% {
+    width: 100px;
+    height: 100px;
+    opacity: 0;
+  }
+}
+
+@keyframes shine-run {
+  0% {
+    left: -100%;
+    background-position: 200% 0;
+  }
+  100% {
+    left: 200%;
+    background-position: -200% 0;
+  }
+}
+
+/* === ПУЛЬСАЦИЯ ЛОГОТИПА === */
+.logoPulse {
+  animation: pulse-breath 3s ease-in-out infinite alternate;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 12px rgba(212, 167, 106, 0.15);
+  border: 2px solid rgba(212, 167, 106, 0.2);
+}
+
+.logoPulse:hover {
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 8px 24px rgba(212, 167, 106, 0.3);
+}
+
+@keyframes pulse-breath {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.02);
+  }
+}
+
+/* === КНОПКА "СВЯЗАТЬСЯ" — С ПЛАВНЫМ ВРАЩЕНИЕМ === */
+.contact-button {
+  background: #d4a76a !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 12px !important;
+  font-weight: 500;
+  font-size: 1rem;
+  line-height: 1;
+  height: 42px;
+  min-height: 42px;
+  padding: 0.6rem 1.2rem !important;
+  box-shadow: 0 0 6px rgba(212, 167, 106, 0.2);
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.contact-button:hover {
+  outline: 2px solid #5a4a42;
+  box-shadow: 0 0 8px rgba(90, 74, 66, 0.3);
+  background: #d8b075 !important;
+}
+
+.contact-button:active {
+  background: #c4975a !important;
+  transform: none;
+}
+
+.contact-button i {
+  font-size: 1.1rem;
+  transition: transform 0.5s ease;
+  z-index: 2;
+}
+
+.contact-button:hover i {
+  transform: scale(1.15) rotate(10deg);
+}
+
+.contact-button:active i {
+  transform: scale(0.95);
+}
+
+/* === КНОПКИ "ВОЙТИ" И "ВЫЙТИ" — ОДИНАКОВЫЙ СТИЛЬ === */
+.gradient-button {
+  background: white !important;
+  color: #5a4a42 !important;
+  font-weight: 500;
+  font-size: 1rem;
+  border: none !important;
+  border-radius: 12px;
+  padding: 0.6rem 1.2rem;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  height: 42px;
+  min-height: 42px;
+  z-index: 1;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 6px rgba(212, 167, 106, 0.1);
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+.gradient-button:hover {
+  outline: 2px solid #d4a76a;
+  box-shadow: 0 0 8px rgba(212, 167, 106, 0.2);
+}
+
+.gradient-button:active {
+  background: #f5f5f5 !important;
+  color: #444 !important;
+}
+
+.gradient-button i {
+  color: #5a4a42;
+  font-size: 1.1rem;
+  transition: transform 0.5s ease;
+  z-index: 2;
+}
+
+.gradient-button:hover i {
+  transform: scale(1.15) rotate(10deg);
+}
+
+.gradient-button:active i {
+  transform: scale(0.95);
+}
+
+/* === ЗАГОЛОВОК МОДАЛКИ === */
+.dialog-header {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: #5a4a42;
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+
+.dialog-header i {
+  color: #d4a76a;
+  font-size: 1.3rem;
+}
+
+/* === АДАПТИВНОСТЬ === */
+
+/* Планшеты */
+@media (max-width: 768px) {
+  .navItem {
+    gap: 0.5rem;
+    padding: 0.5rem 0.7rem;
+  }
+  .navItem i {
+    font-size: 1rem;
+  }
+  .navItem span {
+    font-size: 1rem;
+  }
+  .gradient-button,
+  .contact-button {
+    font-size: 1rem;
+    padding: 0.6rem 1.1rem;
+    height: 42px;
+    min-height: 42px;
+  }
+}
+
+/* Мобильные */
+@media (max-width: 600px) {
+  .navItem {
+    gap: 0.4rem;
+    padding: 0.4rem 0.6rem;
+  }
+  .navItem i {
+    font-size: 0.95rem;
+  }
+  .navItem span {
+    font-size: 0.95rem;
+  }
+  .gradient-button,
+  .contact-button {
+    font-size: 0.95rem;
+    padding: 0.5rem 1rem;
+    height: 40px;
+    min-height: 40px;
+  }
+}

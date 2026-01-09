@@ -1,0 +1,109 @@
+/* === ССЫЛКИ В ФУТЕРЕ — ПЛАВНОЕ ПОДЧЁРКИВАНИЕ === */
+.footer-link {
+  color: #666;
+  text-decoration: none;
+  position: relative;
+  padding: 0.25rem 0;
+  transition: color 0.3s ease;
+}
+
+.footer-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 1.5px;
+  background: #d4a76a;
+  transition: width 0.4s ease;
+  border-radius: 0.75px;
+}
+
+.footer-link:hover {
+  color: #5a4a42;
+}
+
+.footer-link:hover::after {
+  width: 100%;
+}
+
+/* === КНОПКИ СОЦСЕТЕЙ — МЯГКОЕ СВЕЧЕНИЕ БЕЗ ХОВЕРА === */
+.social-button {
+  position: relative;
+  overflow: hidden;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  z-index: 1;
+}
+
+/* Мягкое свечение при наведении */
+.social-button::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  width: 0;
+  height: 0;
+  background: radial-gradient(circle, rgba(212, 167, 106, 0.3) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.6s ease, width 0.6s ease, height 0.6s ease;
+  z-index: -1;
+}
+
+.social-button:hover::before {
+  width: 80px;
+  height: 80px;
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* Плавная смена цвета иконки — без поворота */
+.social-button:hover i {
+  color: #d4a76a !important;
+  transition: color 0.4s ease;
+}
+
+.social-button:active i {
+  color: #c08a4a !important;
+}
+
+/* Убран ховер с изменением размера и поворота */
+.social-button i {
+  transition: color 0.3s ease;
+  font-size: 1.2rem;
+}
+
+/* === АДАПТИВНОСТЬ === */
+
+/* Планшеты */
+@media (max-width: 768px) {
+  .footer-link {
+    font-size: 0.85rem;
+  }
+  .social-button {
+    width: 36px;
+    height: 36px;
+  }
+  .social-button::before {
+    width: 70px;
+    height: 70px;
+  }
+}
+
+/* Мобильные */
+@media (max-width: 600px) {
+  .footer-link {
+    font-size: 0.8rem;
+  }
+  .social-button {
+    width: 32px;
+    height: 32px;
+  }
+  .social-button::before {
+    width: 60px;
+    height: 60px;
+  }
+}
