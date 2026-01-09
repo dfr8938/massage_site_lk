@@ -1,76 +1,54 @@
-/* === ПУЛЬСАЦИЯ — КНОПКА ДЫШИТ, КОГДА ВИДНА === */
-.pulse-grow {
-  animation: pulse-breath 3s ease-in-out infinite alternate;
-  display: inline-block;
+/* === КРУГЛАЯ КНОПКА С ХОВЕРОМ === */
+.scroll-to-top-button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50% !important;
+  transition: all 0.3s ease;
+  background-color: white !important;
+  border: 1px solid #d9d3ce !important;
+  overflow: hidden;
+  width: 44px !important;
+  height: 44px !important;
+  min-width: 44px !important;
+  min-height: 44px !important;
+  color: #5a4a42 !important;
+  padding: 0 !important;
+  position: relative !important;
+  box-sizing: border-box !important;
 }
 
+/* === ЭФФЕКТ ХОВЕРА === */
+.scroll-to-top-button:hover {
+  color: white !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(90, 74, 66, 0.2) !important;
+}
+
+/* === АКТИВНОЕ СОСТОЯНИЕ === */
+.scroll-to-top-button:active {
+  transform: translateY(0);
+  color: white !important;
+}
+
+/* === ПУЛЬСАЦИЯ ПРИ ВИДИМОСТИ === */
 @keyframes pulse-breath {
   0% {
     transform: scale(1);
   }
   100% {
-    transform: scale(1.04);
+    transform: scale(1.02);
   }
 }
 
-/* === ТЁПЛОЕ СВЕЧЕНИЕ ПРИ НАВЕДЕНИИ === */
-.scroll-button {
-  position: relative;
-  transition: all 0.4s ease !important;
+.scroll-to-top-button {
+  animation: pulse-breath 3s ease-in-out infinite alternate;
 }
 
-.scroll-button:hover {
-  box-shadow: 
-    0 6px 16px rgba(90, 74, 66, 0.15),
-    0 0 14px 3px rgba(212, 167, 106, 0.4) !important;
-  transform: scale(1.12) rotate(10deg);
-  border-color: #d4a76a;
-}
-
-/* === ФОНОВАЯ ВОЛНА ПРИ НАВЕДЕНИИ === */
-.scroll-button::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(0);
-  width: 0;
-  height: 0;
-  background: radial-gradient(circle, rgba(212, 167, 106, 0.15) 0%, transparent 70%);
-  border-radius: 50%;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.5s ease, width 0.5s ease, height 0.5s ease;
-}
-
-.scroll-button:hover::before {
-  width: 90px;
-  height: 90px;
-  opacity: 1;
-  transform: translate(-50%, -50%) scale(1);
-  animation: pulse-glow 1.8s ease-out infinite alternate;
-}
-
-@keyframes pulse-glow {
-  0% {
-    opacity: 0.4;
-    width: 90px;
-    height: 90px;
-  }
-  100% {
-    opacity: 0.7;
-    width: 120px;
-    height: 120px;
-  }
-}
-
-/* === АДАПТИВНОСТЬ (по желанию) === */
+/* === АДАПТИВНОСТЬ === */
 @media (max-width: 600px) {
-  .pulse-grow {
-    animation: pulse-breath 3.5s ease-in-out infinite alternate;
-  }
-
-  .scroll-button:hover {
-    transform: scale(1.15) rotate(12deg);
+  .scroll-to-top-button {
+    width: 40px !important;
+    height: 40px !important;
   }
 }

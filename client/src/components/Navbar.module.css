@@ -1,11 +1,19 @@
 /* === ПУНКТ МЕНЮ — ИКОНКА СЛЕВА ОТ ТЕКСТА === */
 .navItem {
   position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
-  gap: 0.5rem;
+  -webkit-column-gap: 0.5rem;
+  -moz-column-gap: 0.5rem;
+  column-gap: 0.5rem;
   cursor: pointer;
   padding: 0.5rem 0.8rem;
+  -webkit-transition: color 0.3s ease;
+  -o-transition: color 0.3s ease;
   transition: color 0.3s ease;
   color: #666;
   font-weight: 500;
@@ -161,11 +169,24 @@
   box-shadow: 0 8px 24px rgba(212, 167, 106, 0.3);
 }
 
-@keyframes pulse-breath {
+@-webkit-keyframes pulse-breath {
   0% {
+    -webkit-transform: scale(1);
     transform: scale(1);
   }
   100% {
+    -webkit-transform: scale(1.02);
+    transform: scale(1.02);
+  }
+}
+
+@keyframes pulse-breath {
+  0% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+  100% {
+    -webkit-transform: scale(1.02);
     transform: scale(1.02);
   }
 }
@@ -182,14 +203,25 @@
   height: 42px;
   min-height: 42px;
   padding: 0.6rem 1.2rem !important;
+  -webkit-box-shadow: 0 0 6px rgba(212, 167, 106, 0.2);
   box-shadow: 0 0 6px rgba(212, 167, 106, 0.2);
   outline: 2px solid transparent;
   outline-offset: 2px;
+  -webkit-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
   transition: all 0.3s ease;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
   display: inline-flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
   justify-content: center;
-  gap: 0.5rem;
+  -webkit-column-gap: 0.5rem;
+  -moz-column-gap: 0.5rem;
+  column-gap: 0.5rem;
   cursor: pointer;
 }
 
@@ -230,14 +262,25 @@
   cursor: pointer;
   position: relative;
   overflow: hidden;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
   display: inline-flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
   justify-content: center;
-  gap: 0.5rem;
+  -webkit-column-gap: 0.5rem;
+  -moz-column-gap: 0.5rem;
+  column-gap: 0.5rem;
   height: 42px;
   min-height: 42px;
   z-index: 1;
+  -webkit-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
   transition: all 0.3s ease;
+  -webkit-box-shadow: 0 0 6px rgba(212, 167, 106, 0.1);
   box-shadow: 0 0 6px rgba(212, 167, 106, 0.1);
   outline: 2px solid transparent;
   outline-offset: 2px;
@@ -270,9 +313,15 @@
 
 /* === ЗАГОЛОВОК МОДАЛКИ === */
 .dialog-header {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
-  gap: 0.6rem;
+  -webkit-column-gap: 0.6rem;
+  -moz-column-gap: 0.6rem;
+  column-gap: 0.6rem;
   color: #5a4a42;
   font-weight: 600;
   font-size: 1.2rem;
@@ -283,33 +332,67 @@
   font-size: 1.3rem;
 }
 
+/* === КНОПКА ЛИЧНОГО КАБИНЕТА/АДМИН-ПАНЕЛИ === */
+.cabinet-button {
+  background: none !important;
+  border: none !important;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  color: #5a4a42;
+  font-size: 1rem;
+  font-weight: 500;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-column-gap: 0.5rem;
+  -moz-column-gap: 0.5rem;
+  column-gap: 0.5rem;
+  transition: color 0.3s ease;
+}
+
+.cabinet-button i {
+  transition: transform 0.5s ease;
+}
+
+.cabinet-button:hover i {
+  transform: rotate(360deg);
+}
+
 /* === АДАПТИВНОСТЬ === */
 
-/* Планшеты */
-@media (max-width: 768px) {
+/* Большие экраны */
+@media (min-width: 1440px) {
   .navItem {
-    gap: 0.5rem;
-    padding: 0.5rem 0.7rem;
+    gap: 0.7rem;
+    padding: 0.5rem 1rem;
   }
   .navItem i {
-    font-size: 1rem;
+    font-size: 1.1rem;
   }
   .navItem span {
-    font-size: 1rem;
+    font-size: 1.1rem;
   }
   .gradient-button,
   .contact-button {
-    font-size: 1rem;
-    padding: 0.6rem 1.1rem;
-    height: 42px;
-    min-height: 42px;
+    font-size: 1.1rem;
+    padding: 0.7rem 1.4rem;
+    height: 48px;
+    min-height: 48px;
+  }
+  .logoPulse {
+    width: 56px;
+    height: 56px;
   }
 }
 
-/* Мобильные */
-@media (max-width: 600px) {
+/* Планшеты в альбомной ориентации */
+@media (min-width: 768px) and (max-width: 1024px) {
   .navItem {
-    gap: 0.4rem;
+    gap: 0.6rem;
     padding: 0.4rem 0.6rem;
   }
   .navItem i {
@@ -324,5 +407,59 @@
     padding: 0.5rem 1rem;
     height: 40px;
     min-height: 40px;
+  }
+  .logoPulse {
+    width: 44px;
+    height: 44px;
+  }
+}
+
+/* Планшеты в портретной ориентации и малые планшеты */
+@media (min-width: 600px) and (max-width: 767px) {
+  .navItem {
+    gap: 0.5rem;
+    padding: 0.4rem 0.5rem;
+  }
+  .navItem i {
+    font-size: 0.9rem;
+  }
+  .navItem span {
+    font-size: 0.9rem;
+  }
+  .gradient-button,
+  .contact-button {
+    font-size: 0.9rem;
+    padding: 0.5rem 0.9rem;
+    height: 38px;
+    min-height: 38px;
+  }
+  .logoPulse {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+/* Малые мобильные устройства */
+@media (max-width: 599px) {
+  .navItem {
+    gap: 0.4rem;
+    padding: 0.3rem 0.4rem;
+  }
+  .navItem i {
+    font-size: 0.85rem;
+  }
+  .navItem span {
+    font-size: 0.85rem;
+  }
+  .gradient-button,
+  .contact-button {
+    font-size: 0.85rem;
+    padding: 0.4rem 0.8rem;
+    height: 36px;
+    min-height: 36px;
+  }
+  .logoPulse {
+    width: 36px;
+    height: 36px;
   }
 }

@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
 import { Button } from 'primereact/button';
-import './ScrollToTopButton.css';
+import React, { useState, useEffect } from 'react';
+import styles from './ScrollToTopButton.module.css';
 
 const ScrollToTopButton = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -35,23 +35,22 @@ const ScrollToTopButton = () => {
           style: {
             position: 'fixed',
             bottom: '30px',
-            right: '30px',
+            left: 'calc(100vw - 70px)',
+            right: 'auto !important',
             zIndex: '1000',
             width: '44px',
             height: '44px',
-            backgroundColor: 'white',
-            color: '#5a4a42',
-            transition: 'all 0.3s ease',
-            border: '1px solid #d9d3ce',
             opacity: isVisible ? 1 : 0,
-            visibility: isVisible ? 'visible' : 'hidden'
+            visibility: isVisible ? 'visible' : 'hidden',
+            transition: 'all 0.3s ease',
+            padding: '0'
           }
         }
       }}
-      className="scroll-to-top-button pulse-grow scroll-button"
       onClick={scrollToTop}
       aria-label="Наверх"
       title="Наверх"
+      className={styles['scroll-to-top-button']}
     />
   );
 };

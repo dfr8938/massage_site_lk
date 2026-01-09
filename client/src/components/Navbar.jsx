@@ -14,7 +14,7 @@ const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [userRole, setUserRole] = useState(() => localStorage.getItem('userRole')); // ✅ Инициализация при монтировании
-  const [isDesktop, setIsDesktop] = useState(window.innerWidth > 768);
+  const [isDesktop, setIsDesktop] = useState(window.innerWidth > 1024);
   const [logoLoaded, setLogoLoaded] = useState(false);
   const [visible, setVisible] = useState(false);
   const [formData, setFormData] = useState({
@@ -39,7 +39,7 @@ const Navbar = () => {
   ];
 
   const desktopNav = (
-    <div style={{ display: 'flex', alignItems: 'center', gap: '2rem' }}>
+    <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
       {menuItems.map((item) => {
         const active = isActive(item.path);
         return (
@@ -69,6 +69,47 @@ const Navbar = () => {
     />
   );
 
+  const isMobile = !isDesktop;
+
+  // Добавляем элементы в меню для мобильной версии
+  const mobileMenuItems = [
+    ...menuItems,
+    {
+      label: 'Связаться',
+      icon: 'pi pi-send',
+      command: () => setVisible(true)
+    },
+    userRole ? {
+      items: [
+        userRole === 'client' && {
+          label: localStorage.getItem('userName') || 'Клиент',
+          icon: 'pi pi-user',
+          command: navigateTo('/cabinet')
+        },
+        userRole === 'admin' && {
+          label: 'Админ',
+          icon: 'pi pi-cog',
+          command: navigateTo('/admin')
+        },
+        {
+          label: 'Выйти',
+          icon: 'pi pi-sign-out',
+          style: { color: '#a0332c' },
+          command: () => {
+            localStorage.removeItem('userRole');
+            localStorage.removeItem('userName');
+            window.dispatchEvent(new Event('storage'));
+            navigate('/');
+          }
+        }
+      ].filter(Boolean)
+    } : {
+      label: 'Войти',
+      icon: 'pi pi-sign-in',
+      command: navigateTo('/login')
+    }
+  ].filter(item => item);
+
   const isHome = location.pathname === '/';
 
   const logo = (
@@ -91,15 +132,14 @@ const Navbar = () => {
     />
   );
 
-  const startContent = (
+  const startContent = isMobile ? null : (
     <div style={{
       display: 'flex',
       alignItems: 'center',
       gap: '1rem'
     }}>
       {logo}
-      {menuButton}
-      {isDesktop && desktopNav}
+      {isDesktop ? desktopNav : menuButton}
     </div>
   );
 
@@ -112,12 +152,11 @@ const Navbar = () => {
     />
   );
 
-  const endContent = (
+  const endContent = isMobile ? null : (
     <div style={{
       display: 'flex',
       alignItems: 'center',
-      gap: '1rem',
-      flexWrap: 'wrap',
+      gap: '0.8rem',
       justifyContent: 'flex-end'
     }}>
       {contactButton}
@@ -126,17 +165,27 @@ const Navbar = () => {
         <div style={{
           display: 'flex',
           alignItems: 'center',
-          gap: '1rem',
-          flexWrap: 'wrap'
+          gap: '0.8rem'
         }}>
-          <span style={{ fontSize: '0.9rem', color: '#555' }}>
-            Здравствуйте, {localStorage.getItem('userName') || 'Пользователь'}
-          </span>
           {userRole === 'client' && (
-            <Button label="Кабинет" icon="pi pi-user" text onClick={navigateTo('/cabinet')} />
+            <button
+              className={styles['cabinet-button']}
+              onClick={navigateTo('/cabinet')}
+              aria-label="Перейти в личный кабинет"
+            >
+              <i className="pi pi-user"></i>
+              <span>{localStorage.getItem('userName') || 'Клиент'}</span>
+            </button>
           )}
           {userRole === 'admin' && (
-            <Button label="Админ" icon="pi pi-cog" text onClick={navigateTo('/admin')} />
+            <button
+              className={styles['cabinet-button']}
+              onClick={navigateTo('/admin')}
+              aria-label="Перейти в админ-панель"
+            >
+              <i className="pi pi-cog"></i>
+              <span>Админ</span>
+            </button>
           )}
           {/* === КНОПКА "ВЫЙТИ" — КРАСНАЯ ИКОНКА И ТЕКСТ, СТИЛЬ КАК У "ВОЙТИ" === */}
           <button
@@ -177,7 +226,7 @@ const Navbar = () => {
   }, []); // ✅ Слушаем изменения localStorage
 
   useLayoutEffect(() => {
-    const handleResize = () => setIsDesktop(window.innerWidth > 768);
+    const handleResize = () => setIsDesktop(window.innerWidth > 1024);
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
@@ -221,7 +270,7 @@ const Navbar = () => {
   return (
     <>
       <Menu
-        model={menuItems.map(item => ({
+        model={isMobile ? mobileMenuItems : menuItems.map(item => ({
           label: (
             <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
               <i className={item.icon}></i>
@@ -234,20 +283,43 @@ const Navbar = () => {
         popup
         ref={menu}
         id="overlay_menu"
+        pt={{
+          root: {
+            style: {
+              width: '90vw',
+              maxWidth: isDesktop ? '320px' : '300px',
+              marginLeft: '5vw',
+              marginTop: '0.5rem',
+              borderRadius: '12px',
+              overflow: 'hidden'
+            }
+          },
+          content: {
+            style: {
+              padding: isDesktop ? '1rem 0' : '0.8rem 0'
+            }
+          },
+          item: {
+            style: {
+              padding: isDesktop ? '0.8rem 1rem' : '0.7rem 1rem'
+            }
+          }
+        }}
       />
 
       <Toolbar
-        start={startContent}
-        end={endContent}
+        start={isMobile ? <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>{logo}</div> : startContent}
+        end={isMobile ? menuButton : endContent}
         style={{
           backgroundColor: '#ffffff',
           borderBottom: '1px solid #e0e0e0',
           padding: '0.75rem 1.5rem',
           display: 'flex',
-          justifyContent: 'space-between',
+          justifyContent: isMobile ? 'space-between' : 'space-between',
           alignItems: 'center',
-          flexWrap: 'wrap',
-          gap: '1rem'
+          flexWrap: 'nowrap',
+          overflow: 'hidden',
+          width: '100%'
         }}
       />
 
